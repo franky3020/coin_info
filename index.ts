@@ -17,9 +17,23 @@ app.get("/", (request: Request, response: Response) => {
   response.status(200).send("Hello World");
 });
 
-app.get("/BlockCount", async (request: Request, response: Response) => {
-  let count = await dogecoinRCPClent.GetBlockCount();
-  response.status(200).send(count.toString());
+app.get("/BlockHeightInfo", async (request: Request, response: Response) => {
+
+  let height = await dogecoinRCPClent.GetBlockHeight();
+
+  let heightInfoList = [];
+
+  let currentHeight = height;
+  for(let i = 0 ; i < 6 ; i++) {
+    let blockHash = await dogecoinRCPClent.GetBlockHash(currentHeight);
+    heightInfoList.push({height: currentHeight, blockHash: blockHash});
+
+    currentHeight--;
+    if(currentHeight < 0) {
+      break;
+    }
+  }
+  response.json(heightInfoList);
 });
 
 app.listen(PORT, () => {
