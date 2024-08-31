@@ -1,5 +1,4 @@
 import axios from 'axios';
-import dotenv from "dotenv";
 
 export class DogecoinRCPClent {
 
@@ -75,4 +74,32 @@ export class DogecoinRCPClent {
             });
         })
     }
+
+    GetRowTransaction(txid: string): Promise<any>{
+        const url = process.env.NODE_URL as string;
+
+        const auth = {
+            username: process.env.NODE_USER_NAME as string,
+            password: process.env.NODE_PW as string
+        };
+        const data = {
+            method: "getrawtransaction",
+            params: [txid, true]
+        };
+        return new Promise<number>((resolve, reject) => {
+            axios.post(url, data, {
+                auth: auth
+            })
+            .then(response => {
+                console.log("Ok");
+                console.log(response);
+                resolve(response.data.result);
+            })
+            .catch(error => {
+                console.log(error);
+                reject();
+            });
+        })
+    }
+
 }
