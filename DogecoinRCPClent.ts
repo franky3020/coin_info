@@ -3,7 +3,7 @@ import axios from 'axios';
 export class DogecoinRCPClent {
 
 
-    GetBlock(blockHash: string){
+    GetBlock(blockHash: string): Promise<any>{
         const url = process.env.NODE_URL as string;
 
         const auth = {
@@ -12,18 +12,21 @@ export class DogecoinRCPClent {
         };
         const data = {
             method: "getblock",
-            params: [blockHash, 2]
+            params: [blockHash, 3]
         };
 
-        axios.post(url, data, {
-            auth: auth
+        return new Promise<string>((resolve, reject) => {
+            axios.post(url, data, {
+                auth: auth
+            })
+            .then(response => {
+                resolve(response.data.result as any);
+            })
+            .catch(error => {
+                console.log(error.response.data.error);
+                reject();
+            });
         })
-        .then(response => {
-            console.log(response.data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
     }
 
     GetBlockHash(blockHeight: number): Promise<string>{

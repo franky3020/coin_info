@@ -10,13 +10,6 @@ const PORT = process.env.PORT;
 
 const dogecoinRCPClent = new DogecoinRCPClent();
 
-// dogecoinRCPClent.GetBlock("9c7f36f170ccb64630fbca8d9a665f4a439a3698dd1f6cb06b619ae6c7c76dd5");
-// dogecoinRCPClent.GetBlockCount();
-
-dogecoinRCPClent.GetRowTransaction("ad471b1ba72d313bdc0c421f2ecc7ae79c413669c87f473bbd866bdec11c4b36");
-
-
-
 app.get("/", (request: Request, response: Response) => {
   response.status(200).send("Hello World");
 });
@@ -38,6 +31,11 @@ app.get("/BlockHeightInfo", async (request: Request, response: Response) => {
     }
   }
   response.json(heightInfoList);
+});
+
+app.get("/Block/:hashId", async (request: Request, response: Response) => {
+  let blockInfo = await dogecoinRCPClent.GetBlock(request.params.hashId);
+  response.json(blockInfo);
 });
 
 app.listen(PORT, () => {
