@@ -34,8 +34,12 @@ app.get("/BlockHeightInfo", async (request: Request, response: Response) => {
 });
 
 app.get("/Block/:hashId", async (request: Request, response: Response) => {
-  let blockInfo = await dogecoinRCPClent.GetBlock(request.params.hashId);
-  response.json(blockInfo);
+  try {
+    let blockInfo = await dogecoinRCPClent.GetBlock(request.params.hashId);
+    response.json(blockInfo);
+  } catch (err) {
+    response.status(404).send('Sorry, we cannot find that!')
+  }
 });
 
 app.listen(PORT, () => {

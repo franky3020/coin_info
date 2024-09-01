@@ -23,8 +23,7 @@ export class DogecoinRCPClent {
                 resolve(response.data.result as any);
             })
             .catch(error => {
-                console.log(error.response.data.error);
-                reject();
+                reject(error.response.data.error);
             });
         })
     }
