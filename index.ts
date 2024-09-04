@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import dotenv from "dotenv";
 import { DogecoinRCPClent } from "./DogecoinRCPClent";
+import { CoinAddressInfo } from "./CoinAddressInfo";
 
 // configures dotenv to work in your application
 dotenv.config();
@@ -9,6 +10,9 @@ const app = express();
 const PORT = process.env.PORT;
 
 const dogecoinRCPClent = new DogecoinRCPClent();
+
+const coinAddressInfo = new CoinAddressInfo();
+coinAddressInfo.GetLatestBlockAddress();
 
 app.get("/", (request: Request, response: Response) => {
   response.status(200).send("Hello World");
