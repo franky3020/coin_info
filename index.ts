@@ -11,12 +11,18 @@ const PORT = process.env.PORT;
 
 const dogecoinRCPClent = new DogecoinRCPClent();
 
-const coinAddressInfo = new CoinAddressInfo();
-coinAddressInfo.GetLatestBlockAddress();
+
 
 app.get("/", (request: Request, response: Response) => {
   response.status(200).send("Hello World");
 });
+
+app.get("/GetLatestBlockAddress", async (request: Request, response: Response) => {
+  const coinAddressInfo = new CoinAddressInfo();
+  const res = await coinAddressInfo.GetLatestBlockAddress();
+  response.json(res);
+});
+
 
 app.get("/BlockHeightInfo", async (request: Request, response: Response) => {
 

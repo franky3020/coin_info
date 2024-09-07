@@ -1,9 +1,10 @@
 import axios from 'axios';
+import { GetBlockRes } from './resModels/GetBlockRes';
 
 export class DogecoinRCPClent {
 
 
-    GetBlock(blockHash: string): Promise<any>{
+    GetBlock(blockHash: string): Promise<GetBlockRes>{
         const url = process.env.NODE_URL as string;
 
         const auth = {
@@ -15,12 +16,12 @@ export class DogecoinRCPClent {
             params: [blockHash, 3]
         };
 
-        return new Promise<string>((resolve, reject) => {
+        return new Promise<GetBlockRes>((resolve, reject) => {
             axios.post(url, data, {
                 auth: auth
             })
             .then(response => {
-                resolve(response.data.result as any);
+                resolve(JSON.parse(JSON.stringify(response.data.result)));
             })
             .catch(error => {
                 reject(error.response.data.error);
