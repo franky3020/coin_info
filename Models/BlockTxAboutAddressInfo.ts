@@ -20,6 +20,13 @@ export class BlockTxAboutAddressInfo {
             return;
         }
 
+        if (typeof vout.scriptPubKey.addresses === "undefined") {
+            console.error("getBlockRes.hash: ", getBlockRes.hash);
+            console.error("getBlockRes.height: ", getBlockRes.height);
+            console.error("typeof vout.scriptPubKey.addresses ===  undefined");
+            return;
+        }
+
         // TODO: 暫時先這樣
         if (vout.scriptPubKey.addresses.length !== 1) {
             console.error("getBlockRes.hash: ", getBlockRes.hash);
