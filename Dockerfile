@@ -10,6 +10,6 @@ COPY ./ ./
 # Default command
 CMD ["npm", "start"]
 
-# docker build -t dogecoin_info_api .
-# docker rm -f dogecoin_info_api
-# docker run -p 50200:3000 -d --name dogecoin_info_api dogecoin_info_api
+# sudo docker build -t dogecoin_info_api .
+# sudo docker rm -f dogecoin_info_api
+# sudo docker run -d --network host  --name dogecoin_info_api dogecoin_info_api
