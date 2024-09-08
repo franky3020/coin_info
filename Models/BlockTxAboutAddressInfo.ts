@@ -20,6 +20,10 @@ export class BlockTxAboutAddressInfo {
             return;
         }
 
+        if (vout.scriptPubKey.type !== "pubkeyhash") {
+            return;
+        }
+
         if (typeof vout.scriptPubKey.addresses === "undefined") {
             console.error("getBlockRes.hash: ", getBlockRes.hash);
             console.error("getBlockRes.height: ", getBlockRes.height);

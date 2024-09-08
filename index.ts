@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import dotenv from "dotenv";
 import { DogecoinRCPClent } from "./DogecoinRCPClent";
 import { CoinAddressInfo } from "./CoinAddressInfo";
+var cors = require('cors')
 
 // configures dotenv to work in your application
 dotenv.config();
@@ -12,6 +13,7 @@ const PORT = process.env.PORT;
 const dogecoinRCPClent = new DogecoinRCPClent();
 
 
+app.use(cors());
 
 app.get("/", (request: Request, response: Response) => {
   response.status(200).send("Hello World");
