@@ -11,7 +11,7 @@ const app = express();
 const PORT = process.env.PORT;
 
 const dogecoinRCPClent = new DogecoinRCPClent();
-
+const coinAddressInfo = new CoinAddressInfo();
 
 app.use(cors());
 
@@ -20,7 +20,7 @@ app.get("/", (request: Request, response: Response) => {
 });
 
 app.get("/GetLatestBlockAddress", async (request: Request, response: Response) => {
-  const coinAddressInfo = new CoinAddressInfo();
+  console.log("some one call at ", new Date());
   const res = await coinAddressInfo.GetLatestBlockAddress();
   response.json(res);
 });
