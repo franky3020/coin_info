@@ -13,6 +13,8 @@ const PORT = process.env.PORT;
 const dogecoinRCPClent = new DogecoinRCPClent();
 const coinAddressInfo = new CoinAddressInfo();
 
+coinAddressInfo.updateLatestBlockHeightSchedule();
+
 app.use(cors());
 
 app.get("/", (request: Request, response: Response) => {

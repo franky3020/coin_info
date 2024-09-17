@@ -15,20 +15,30 @@ export class CoinAddressInfo {
 
     blockTxAboutAddressInfoMemCache: CacheClass<string, BlockTxAboutAddressInfo> = new memoryCache.Cache();
 
+    latestHeight: number = 0;
+
 
     constructor() {
         this.dogecoinRCPClent = new DogecoinRCPClent();
+    }
+
+
+    async updateLatestBlockHeightSchedule() {
+      this.latestHeight = await this.dogecoinRCPClent.GetBlockHeight();
+      console.log("current height: ", this.latestHeight);
+      setInterval(async () => {
+        this.latestHeight = await this.dogecoinRCPClent.GetBlockHeight();
+        console.log("current height: ", this.latestHeight);
+      }, 10000);
     }
 
     async GetLatestBlockAddress(): Promise<GetLatestBlockAddressView[]> {
 
         const getLatestBlockAddressView: GetLatestBlockAddressView[] = [];
 
-        let height = await this.dogecoinRCPClent.GetBlockHeight();
-
         let heightInfoList = [];
 
-        let currentHeight = height;
+        let currentHeight = this.latestHeight;
         for(let i = 0 ; i < 10 ; i++) {
 
           let blockHash = this.blockHeightMemCache.get(currentHeight);
